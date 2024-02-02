@@ -10,8 +10,8 @@ public class ShutDownModule : BaseCommandModule
     public async Task Shut(CommandContext ctx)
     {   
         var bp = ctx.Client;
-
-        await ctx.RespondAsync("Shutting down...");
+        
+        await ctx.RespondAsync(":red_circle: :red_circle: :red_circle: Shutting down... :red_circle: :red_circle: :red_circle: ");
         await bp.DisconnectAsync();
     }
 }
