@@ -744,3 +744,4 @@ $RECYCLE.BIN/
 *.txt
 BP2415/config.json
 .idea/.idea.BP2415/.idea/cody_history.xml
+BP2415/lavalink/application.yml

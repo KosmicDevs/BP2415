@@ -2,29 +2,35 @@ server: # REST and WS server
   port: 2333
   address: 0.0.0.0
 plugins:
- lavasrc:
-   providers: # Custom providers for track loading. This is the default
-     - "ytsearch:\"%ISRC%\"" # Will be ignored if track does not have an ISRC. See https://esearch.wikipedia.org/wiki/International_Standard_Recording_Code
-     - "ytsearch:%QUERY%" # Will be used if track has no ISRC or no track could be found for the ISRC
-     - "scsearch:%QUERY%" # Soundcloud search provider
-     - "spsearch:%QUERY%" # Spotify search provider
-     - "sprec:%QUERY%" # Spotify recommendation search provider
-     - "ymsearch:%QUERY%" # YouTube Music search provider
-     - "amsearch:%QUERY%" # Apple Music search provider
-     - "dzisrc:%ISRC%" # Deezer ISRC provider
-     - "dzsearch:%QUERY%" # Deezer search provider
-     - "ymsearch:%QUERY%" # Yandex Music search provider
+  lavasrc:
+    providers: # Custom providers for track loading. This is the default
+      - "ytsearch:\"%ISRC%\"" # Will be ignored if track does not have an ISRC. See https://esearch.wikipedia.org/wiki/International_Standard_Recording_Code
+      - "ytsearch:%QUERY%" # Will be used if track has no ISRC or no track could be found for the ISRC
+      - "scsearch:%QUERY%" # Soundcloud search provider
+      - "spsearch:%QUERY%" # Spotify search provider
+      - "sprec:%QUERY%" # Spotify recommendation search provider
+      - "ymsearch:%QUERY%" # YouTube Music search provider
+      - "amsearch:%QUERY%" # Apple Music search provider
+      - "dzisrc:%ISRC%" # Deezer ISRC provider
+      - "dzsearch:%QUERY%" # Deezer search provider
+      - "ymsearch:%QUERY%" # Yandex Music search provider
+
+    sources:
+      spotify: true # Enable Spotify source
+      
+    spotify:
+      clientId: "fceaf9d0682149c48cbe3e3ec8f61ec4"
+      clientSecret: "e1eddc409d7c489392a3159977da8477"
+      countryCode: "JP" # the country code you want to use for filtering the artists top tracks. See https://esearch.wikipedia.org/wiki/ISO_3166-1_alpha-2
+      playlistLoadLimit: 6 # The number of pages at 100 tracks each
+      albumLoadLimit: 6 # The number of pages at 50 tracks each
 lavalink:
   plugins:
-   - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.0.0-beta.5"
-     repository: "https://maven.lavalink.dev/releases"
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.0.1"
+      repository: "https://maven.topi.wtf/releases"
   server:
     password: "youshallnotpass"
     sources:
-      spotify: true # Enable Spotify source
-      applemusic: true # Enable Apple Music source
-      deezer: true # Enable Deezer source
-      yandexmusic: true # Enable Yandex Music source
       youtube: true
       bandcamp: true
       soundcloud: true
@@ -32,14 +38,6 @@ lavalink:
       vimeo: true
       http: true
       local: false
-    
-    spotify:
-      clientId: "fceaf9d0682149c48cbe3e3ec8f61ec4"
-      clientSecret: "e1eddc409d7c489392a3159977da8477"
-      countryCode: "JP" # the country code you want to use for filtering the artists top tracks. See https://esearch.wikipedia.org/wiki/ISO_3166-1_alpha-2
-      playlistLoadLimit: 6 # The number of pages at 100 tracks each
-      albumLoadLimit: 6 # The number of pages at 50 tracks each
-    
     filters: # All filters are enabled by default
       volume: true
       equalizer: true
