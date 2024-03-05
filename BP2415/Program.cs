@@ -11,8 +11,6 @@ using DisCatSharp.ApplicationCommands;
 using DisCatSharp.CommandsNext;
 using DisCatSharp.Entities;
 using DisCatSharp.Enums;
-using DisCatSharp.Lavalink;
-using DisCatSharp.Net;
 using DisCatSharp.ApplicationCommands.EventArgs;
 
 namespace BP2415
@@ -40,23 +38,7 @@ namespace BP2415
                 Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContent,
             });
             
-            var endpoint = new ConnectionEndpoint
-            {
-                Hostname = "127.0.0.1",
-                Port = 2333
-            };
-
-            var lavalinkConfig = new LavalinkConfiguration
-            {
-                Password = "youshallnotpass",
-                RestEndpoint = endpoint,
-                SocketEndpoint = endpoint
-            };
-
-            var lavalink = Discord.UseLavalink();
-
-            await Discord.ConnectAsync(new DiscordActivity("with the gears.", ActivityType.Watching));
-            await lavalink.ConnectAsync(lavalinkConfig);
+            await Discord.ConnectAsync(new DiscordActivity("with the gears @bp!help", ActivityType.Watching));
 
             var commands = Discord.UseCommandsNext(new CommandsNextConfiguration()
             {
@@ -72,9 +54,6 @@ namespace BP2415
 
             appCommands.RegisterGuildCommands<PingSlash>(1164458794244395028);
             appCommands.RegisterGuildCommands<ShutSlash>(1164458794244395028);
-            appCommands.RegisterGuildCommands<LavaLinkSlash>(1164458794244395028);
-            appCommands.RegisterGuildCommands<MusicSlash>(1164458794244395028);
-            appCommands.RegisterGuildCommands<JoinSlash>(1164458794244395028);
 
             await Task.Delay(-1);
         }
