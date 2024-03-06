@@ -29,6 +29,7 @@ namespace BP2415
             string json = await File.ReadAllTextAsync("config.json");
             dynamic config = JsonConvert.DeserializeObject(json)!;
             string token = config.discord.token.ToString();
+            ulong guildId = config.discord.guild.ToString();
 
             Discord = new DiscordClient(new DiscordConfiguration()
             {
@@ -38,11 +39,15 @@ namespace BP2415
                 Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContent,
             });
             
-            await Discord.ConnectAsync(new DiscordActivity("with the gears @bp!help", ActivityType.Watching));
+            await Discord.ConnectAsync(new DiscordActivity("with the gears bp!help", ActivityType.Watching));
 
             var commands = Discord.UseCommandsNext(new CommandsNextConfiguration()
             {
                 StringPrefixes = [config.discord.prefix.ToString()],
+                CaseSensitive = false,
+                DmHelp = true,
+                EnableMentionPrefix = true,
+                UseDefaultCommandHandler = false,
             });
 
             var appCommands = Discord.UseApplicationCommands();
@@ -52,21 +57,21 @@ namespace BP2415
             appCommands.SlashCommandExecuted += Slash_SlashCommandExecutedAsync;
             appCommands.SlashCommandErrored += Slash_SlashCommandErroredAsync;
 
-            appCommands.RegisterGuildCommands<PingSlash>(1164458794244395028);
-            appCommands.RegisterGuildCommands<ShutSlash>(1164458794244395028);
+            appCommands.RegisterGuildCommands<PingApp>(guildId);
+            appCommands.RegisterGuildCommands<ShutApp>(guildId);
 
             await Task.Delay(-1);
         }
 
         private static Task Slash_SlashCommandExecutedAsync(ApplicationCommandsExtension sender, SlashCommandExecutedEventArgs e)
 	    {
-		    sender.Client.Logger.LogInformation("Slash: {ContextCommandName}", e.Context.CommandName);
+		    sender.Client.Logger.LogInformation("Application: {ContextCommandName}", e.Context.CommandName);
 		    return Task.CompletedTask;
 	    }
 
         private static Task Slash_SlashCommandErroredAsync(ApplicationCommandsExtension sender, SlashCommandErrorEventArgs e)
 	    {
-		    sender.Client.Logger.LogError("Slash: {ExceptionMessage} | CN: {ContextCommandName} | IID: {ContextInteractionId}", e.Exception.Message, e.Context.CommandName, e.Context.InteractionId);
+		    sender.Client.Logger.LogError("Application: {ExceptionMessage} | CN: {ContextCommandName} | IID: {ContextInteractionId}", e.Exception.Message, e.Context.CommandName, e.Context.InteractionId);
 		    return Task.CompletedTask;
 	    }
     }
