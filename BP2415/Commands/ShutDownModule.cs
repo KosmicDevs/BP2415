@@ -5,13 +5,13 @@ namespace BP2415.Commands;
 
 public class ShutDownModule : BaseCommandModule
 {
-    [Command(name:"shut")]
+    [Command("shut")]
     [RequireOwnerOrId(1164458370611298304, 865542945402126356)]
-    public async Task Shut(CommandContext ctx)
-    {   
+    public static async Task Shut(CommandContext ctx)
+    {
         var bp = ctx.Client;
-        
-        await ctx.RespondAsync(":red_circle: :red_circle: :red_circle: Shutting down... :red_circle: :red_circle: :red_circle: ");
+
+        await ctx.RespondAsync("***Shutting down...***");
         await bp.DisconnectAsync();
     }
 }

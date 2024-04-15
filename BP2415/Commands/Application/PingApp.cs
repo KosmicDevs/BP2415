@@ -1,16 +1,14 @@
 using DisCatSharp.ApplicationCommands;
 using DisCatSharp.ApplicationCommands.Attributes;
 using DisCatSharp.ApplicationCommands.Context;
-using DisCatSharp.CommandsNext.Attributes;
 using DisCatSharp.Enums;
 
-namespace BP2415.Commands.Slash;
+namespace BP2415.Commands.Application;
 
-public class PingApp : ApplicationCommandsModule
+public abstract class PingApp : ApplicationCommandsModule
 {
     [SlashCommand(name: "ping", description: "pong")]
-    [RequireGuild, RequireOwnerOrId(1164458370611298304, 865542945402126356)]
-    public async Task Ping(InteractionContext ctx)
+    public static async Task Ping(InteractionContext ctx)
     {
         await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
         {
