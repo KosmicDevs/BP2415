@@ -1,13 +1,15 @@
 using DisCatSharp.CommandsNext;
 using DisCatSharp.CommandsNext.Attributes;
 
-namespace BP2415.Commands;
-
-public class PingModule : BaseCommandModule
+namespace BP2415.Commands
 {
-    [Command("ping"), Aliases("pong")]
-    public async Task Ping(CommandContext ctx)
+    public class PingModule : BaseCommandModule
     {
-        await ctx.RespondAsync(":ping_pong: " + ctx.Client.Ping + "ms");
+        [Command("ping")]
+        [Aliases("pong")]
+        public async Task Ping(CommandContext ctx)
+        {
+            await ctx.RespondAsync(":ping_pong: " + ctx.Client.Ping + "ms");
+        }
     }
 }
