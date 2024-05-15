@@ -5,7 +5,7 @@ using DisCatSharp.CommandsNext.Attributes;
 using DisCatSharp.Entities;
 using DisCatSharp.Enums;
 
-namespace BP2415.Commands.Application
+namespace BP2415.Commands.Applications
 {
     public class StatusApp : ApplicationCommandsModule
     {

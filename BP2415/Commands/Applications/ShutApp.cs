@@ -1,21 +1,27 @@
 using DisCatSharp.ApplicationCommands;
 using DisCatSharp.ApplicationCommands.Attributes;
 using DisCatSharp.ApplicationCommands.Context;
+using DisCatSharp.CommandsNext.Attributes;
 using DisCatSharp.Entities;
 using DisCatSharp.Enums;
 
-namespace BP2415.Commands.Application
+namespace BP2415.Commands.Applications
 {
-    public class PingApp : ApplicationCommandsModule
+    public class ShutApp : ApplicationCommandsModule
     {
-        [SlashCommand("ping", "Pingt den Bot an")]
+        [SlashCommand("shut", "Schaltet den Bot ab")]
+        [RequireOwner]
+        [Hidden]
         public async Task Ping(InteractionContext ctx)
         {
+            var bp = ctx.Client;
+
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder
                 {
-                    Content = ":ping_pong: " + ctx.Client.Ping + "ms"
+                    Content = "***Herunterfahren...***"
                 });
+            await bp.DisconnectAsync();
         }
     }
 }

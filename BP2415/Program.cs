@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using BP2415.Commands;
-using BP2415.Commands.Application;
+using BP2415.Commands.Applications;
 using DisCatSharp;
 using DisCatSharp.ApplicationCommands;
 using DisCatSharp.ApplicationCommands.EventArgs;
@@ -68,7 +68,7 @@ namespace BP2415
         private static Task Slash_SlashCommandExecutedAsync(ApplicationCommandsExtension sender,
             SlashCommandExecutedEventArgs e)
         {
-            sender.Client.Logger.LogInformation("Application: {ContextCommandName}", e.Context.CommandName);
+            sender.Client.Logger.LogInformation("Applications: {ContextCommandName}", e.Context.CommandName);
             return Task.CompletedTask;
         }
 
@@ -76,7 +76,7 @@ namespace BP2415
             SlashCommandErrorEventArgs e)
         {
             sender.Client.Logger.LogError(
-                "Application: {ExceptionMessage} | CN: {ContextCommandName} | IID: {ContextInteractionId}",
+                "Applications: {ExceptionMessage} | CN: {ContextCommandName} | IID: {ContextInteractionId}",
                 e.Exception.Message, e.Context.CommandName, e.Context.InteractionId);
             return Task.CompletedTask;
         }
