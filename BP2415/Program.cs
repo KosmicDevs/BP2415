@@ -1,5 +1,5 @@
-using System.Reflection;
-using BP2415.Commands.Slash;
+using BP2415.Commands;
+using BP2415.Commands.Application;
 using DisCatSharp;
 using DisCatSharp.ApplicationCommands;
 using DisCatSharp.ApplicationCommands.EventArgs;
@@ -22,7 +22,7 @@ namespace BP2415
 
         private static async Task MainAsync(string[] args)
         {
-            string json = await File.ReadAllTextAsync("config.json");
+            var json = await File.ReadAllTextAsync("config.json");
             dynamic config = JsonConvert.DeserializeObject(json)!;
             string token = config.discord.token.ToString();
             ulong guildId = config.discord.guild.ToString();
@@ -32,6 +32,8 @@ namespace BP2415
                 Token = token,
                 TokenType = TokenType.Bot,
                 MinimumLogLevel = LogLevel.Debug,
+                Locale = "de_DE",
+                Timezone = TimeZoneInfo.Utc.ToString(),
                 Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContent,
             });
 
@@ -40,15 +42,13 @@ namespace BP2415
             var commands = Discord.UseCommandsNext(new CommandsNextConfiguration()
             {
                 StringPrefixes = [config.discord.prefix.ToString()],
-                CaseSensitive = false,
-                DmHelp = true,
-                EnableMentionPrefix = true,
-                UseDefaultCommandHandler = false,
             });
 
-            var appCommands = Discord.UseApplicationCommands();
+            commands.RegisterCommands<PingModule>();
+            commands.RegisterCommands<ShutDownModule>();
+            commands.RegisterCommands<StatusModule>();
 
-            commands.RegisterCommands(Assembly.GetExecutingAssembly());
+            var appCommands = Discord.UseApplicationCommands();
 
             appCommands.SlashCommandExecuted += Slash_SlashCommandExecutedAsync;
             appCommands.SlashCommandErrored += Slash_SlashCommandErroredAsync;

@@ -2,22 +2,27 @@ using DisCatSharp.ApplicationCommands;
 using DisCatSharp.ApplicationCommands.Attributes;
 using DisCatSharp.ApplicationCommands.Context;
 using DisCatSharp.CommandsNext.Attributes;
+using DisCatSharp.Entities;
 using DisCatSharp.Enums;
 
-namespace BP2415.Commands.Slash;
-
-public class ShutApp : ApplicationCommandsModule
+namespace BP2415.Commands.Application
 {
-    [SlashCommand(name: "shut", isNsfw: true, description: "shuts down the bot")]
-    [RequireOwnerOrId(1164458370611298304, 865542945402126356)]
-    public async Task Ping(InteractionContext ctx)
+    public class ShutApp : ApplicationCommandsModule
     {
-        var bp = ctx.Client;
-        
-        await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
+        [SlashCommand("shut", "Schaltet den Bot ab")]
+        [RequireOwner]
+        [Hidden]
+        public async Task Ping(InteractionContext ctx)
         {
-            Content = ":red_circle: :red_circle: :red_circle: Shutting down... :red_circle: :red_circle: :red_circle: "
-        });
-        await bp.DisconnectAsync();
+            var bp = ctx.Client;
+
+            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder
+                {
+                    Content =
+                        ":red_circle: :red_circle: :red_circle: Herunterfahren... :red_circle: :red_circle: :red_circle: "
+                });
+            await bp.DisconnectAsync();
+        }
     }
 }

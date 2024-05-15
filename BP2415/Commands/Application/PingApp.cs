@@ -1,18 +1,21 @@
 using DisCatSharp.ApplicationCommands;
 using DisCatSharp.ApplicationCommands.Attributes;
 using DisCatSharp.ApplicationCommands.Context;
+using DisCatSharp.Entities;
 using DisCatSharp.Enums;
 
-namespace BP2415.Commands.Application;
-
-public abstract class PingApp : ApplicationCommandsModule
+namespace BP2415.Commands.Application
 {
-    [SlashCommand(name: "ping", description: "pong")]
-    public static async Task Ping(InteractionContext ctx)
+    public abstract class PingApp : ApplicationCommandsModule
     {
-        await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
+        [SlashCommand("ping", "Pingt den Bot an")]
+        public static async Task Ping(InteractionContext ctx)
         {
-            Content = ":ping_pong: " + ctx.Client.Ping + "ms"
-        });
+            await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder
+                {
+                    Content = ":ping_pong: " + ctx.Client.Ping + "ms"
+                });
+        }
     }
 }
