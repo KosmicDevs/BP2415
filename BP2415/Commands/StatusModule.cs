@@ -11,6 +11,7 @@ namespace BP2415.Commands
 
         [Command("status")]
         [Aliases("stats")]
+        [Description("Ändern Sie den aktuellen Status des Bots")]
         [RequireOwner]
         [Hidden]
         public async Task Status(CommandContext ctx, [RemainingText] string status)

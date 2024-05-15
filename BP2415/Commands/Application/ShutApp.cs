@@ -9,7 +9,7 @@ namespace BP2415.Commands.Application
 {
     public class ShutApp : ApplicationCommandsModule
     {
-        [SlashCommand("shut", isNsfw: true, description: "schaltet den Bot ab")]
+        [SlashCommand("shut", "Schaltet den Bot ab")]
         [RequireOwner]
         [Hidden]
         public async Task Ping(InteractionContext ctx)

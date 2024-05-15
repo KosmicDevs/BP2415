@@ -10,8 +10,7 @@ namespace BP2415.Commands.Application
     public class StatusApp : ApplicationCommandsModule
     {
         [SlashCommand("status", "Ändern Sie den Status des Bots")]
-        [Hidden]
-        [RequireOwnerOrId(1164458370611298304, 865542945402126356)]
+        [RequireOwner, Hidden]
         public async Task Status(InteractionContext ctx,
             [Option("status", "Eingabe des neuen Status")] [RemainingText]
             string status)

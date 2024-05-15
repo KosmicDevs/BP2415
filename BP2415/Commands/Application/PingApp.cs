@@ -8,7 +8,7 @@ namespace BP2415.Commands.Application
 {
     public class PingApp : ApplicationCommandsModule
     {
-        [SlashCommand("ping", "pong")]
+        [SlashCommand("ping", "Pingt den Bot an")]
         public async Task Ping(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,

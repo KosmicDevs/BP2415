@@ -6,7 +6,9 @@ namespace BP2415.Commands
     public class ShutDownModule : BaseCommandModule
     {
         [Command("shut")]
-        [RequireOwnerOrId(1164458370611298304, 865542945402126356)]
+        [Description("Schaltet den Bot ab")]
+        [RequireOwner]
+        [Hidden]
         public async Task Shut(CommandContext ctx)
         {
             var bp = ctx.Client;
