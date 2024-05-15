@@ -1,0 +1,11 @@
+{
+  "discord": {
+    "token": "token",
+    "prefix": "bp!",
+    "owners_id": [
+      "id",
+      "id"
+    ],
+    "guild": "id"
+  }
+}

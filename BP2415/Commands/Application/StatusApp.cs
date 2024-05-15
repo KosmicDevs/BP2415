@@ -7,21 +7,20 @@ using DisCatSharp.Enums;
 
 namespace BP2415.Commands.Application
 {
-    public class ShutApp : ApplicationCommandsModule
+    public class StatusApp : ApplicationCommandsModule
     {
-        [SlashCommand("shut", "Schaltet den Bot ab")]
-        [RequireOwner]
-        [Hidden]
-        public async Task Ping(InteractionContext ctx)
+        [SlashCommand("status", "Ändern Sie den Status des Bots")]
+        [RequireOwner, Hidden]
+        public async Task Status(InteractionContext ctx,
+            [Option("status", "Eingabe des neuen Status")] [RemainingText]
+            string status)
         {
-            var bp = ctx.Client;
-
+            await ctx.Client.UpdateStatusAsync(new DiscordActivity($"{status}", ActivityType.Custom));
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder
                 {
-                    Content = "***Herunterfahren...***"
+                    Content = $"Status aktualisiert {status}."
                 });
-            await bp.DisconnectAsync();
         }
     }
 }

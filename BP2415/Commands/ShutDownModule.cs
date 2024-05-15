@@ -1,17 +1,20 @@
 using DisCatSharp.CommandsNext;
 using DisCatSharp.CommandsNext.Attributes;
 
-namespace BP2415.Commands;
-
-public class ShutDownModule : BaseCommandModule
+namespace BP2415.Commands
 {
-    [Command("shut")]
-    [RequireOwnerOrId(1164458370611298304, 865542945402126356)]
-    public static async Task Shut(CommandContext ctx)
+    public class ShutDownModule : BaseCommandModule
     {
-        var bp = ctx.Client;
+        [Command("shut")]
+        [Description("Schaltet den Bot ab")]
+        [RequireOwner]
+        [Hidden]
+        public async Task Shut(CommandContext ctx)
+        {
+            var bp = ctx.Client;
 
-        await ctx.RespondAsync("***Shutting down...***");
-        await bp.DisconnectAsync();
+            await ctx.RespondAsync("***SHerunterfahren...***");
+            await bp.DisconnectAsync();
+        }
     }
 }

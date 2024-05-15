@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using BP2415.Commands;
 using BP2415.Commands.Application;
 using DisCatSharp;
 using DisCatSharp.ApplicationCommands;
@@ -20,8 +21,9 @@ namespace BP2415
             MainAsync(args).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        private static async Task MainAsync(string[] args)
+        private static async Task MainAsync(IEnumerable args = null!)
         {
+            ArgumentNullException.ThrowIfNull(args);
             var json = await File.ReadAllTextAsync("config.json");
             dynamic config = JsonConvert.DeserializeObject(json)!;
             string token = config.discord.token.ToString();
@@ -33,34 +35,32 @@ namespace BP2415
             {
                 Token = token,
                 TokenType = TokenType.Bot,
-                MinimumLogLevel = LogLevel.Trace,
+                MinimumLogLevel = LogLevel.Debug,
                 Intents = DiscordIntents.All,
-                Locale = "en",
+                Locale = "de_DE",
                 Timezone = TimeZoneInfo.Utc.ToString(),
                 MobileStatus = true
             });
 
-            await Discord.ConnectAsync(new DiscordActivity("with the gears bp!help", ActivityType.Custom));
+            await Discord.ConnectAsync(new DiscordActivity("AAAA", ActivityType.Custom));
 
             var commands = Discord.UseCommandsNext(new CommandsNextConfiguration()
             {
                 StringPrefixes = [config.discord.prefix.ToString()],
-                CaseSensitive = false,
-                DmHelp = true,
-                EnableMentionPrefix = true,
-                UseDefaultCommandHandler = true,
-                EnableDms = true
             });
 
             var appCommands = Discord.UseApplicationCommands();
 
-            commands.RegisterCommands(Assembly.GetExecutingAssembly());
+            commands.RegisterCommands<StatusModule>();
+            commands.RegisterCommands<PingModule>();
+            commands.RegisterCommands<ShutDownModule>();
 
             appCommands.SlashCommandExecuted += Slash_SlashCommandExecutedAsync;
             appCommands.SlashCommandErrored += Slash_SlashCommandErroredAsync;
 
             appCommands.RegisterGuildCommands<PingApp>(guildId);
             appCommands.RegisterGuildCommands<ShutApp>(guildId);
+            appCommands.RegisterGuildCommands<StatusApp>(guildId);
 
             await Task.Delay(-1);
         }
