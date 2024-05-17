@@ -31,13 +31,13 @@ namespace BP2415
             {
                 Token = token,
                 TokenType = TokenType.Bot,
-                MinimumLogLevel = LogLevel.Debug,
+                MinimumLogLevel = LogLevel.Trace,
                 Locale = "de_DE",
-                Timezone = TimeZoneInfo.Utc.ToString(),
-                Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContent,
+                Timezone = "UTC",
+                Intents = DiscordIntents.All
             });
 
-            await Discord.ConnectAsync(new DiscordActivity("with the gears bp!help", ActivityType.Watching));
+            await Discord.ConnectAsync(new DiscordActivity(" the gears, bp!help", ActivityType.ListeningTo));
 
             var commands = Discord.UseCommandsNext(new CommandsNextConfiguration()
             {
@@ -50,11 +50,12 @@ namespace BP2415
 
             var appCommands = Discord.UseApplicationCommands();
 
-            appCommands.SlashCommandExecuted += Slash_SlashCommandExecutedAsync;
-            appCommands.SlashCommandErrored += Slash_SlashCommandErroredAsync;
-
             appCommands.RegisterGuildCommands<PingApp>(guildId);
             appCommands.RegisterGuildCommands<ShutApp>(guildId);
+            appCommands.RegisterGuildCommands<StatusApp>(guildId);
+
+            appCommands.SlashCommandExecuted += Slash_SlashCommandExecutedAsync;
+            appCommands.SlashCommandErrored += Slash_SlashCommandErroredAsync;
 
             await Task.Delay(-1);
         }

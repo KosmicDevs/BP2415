@@ -1,4 +1,3 @@
-using DisCatSharp;
 using DisCatSharp.CommandsNext;
 using DisCatSharp.CommandsNext.Attributes;
 using DisCatSharp.Entities;
@@ -7,8 +6,6 @@ namespace BP2415.Commands
 {
     public class StatusModule : BaseCommandModule
     {
-        internal static DiscordClient Discord { get; set; } = null!;
-
         [Command("status")]
         [Aliases("stats")]
         [Description("Ändern Sie den aktuellen Status des Bots")]
